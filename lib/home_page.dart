@@ -21,10 +21,16 @@ class _HomePageState extends State<HomePage> {
     var json = jsonDecode(response.body);
     var data = Data.fromJson(json);
     setState(() {
-      resultado = "${data.logradouro}\n"
-          "${data.complemento}\n"
-          "${data.bairro}\n"
-          "${data.cidade}";
+      if(data.complemento != null){
+        resultado = "${data.logradouro}\n"
+            "${data.complemento}\n"
+            "${data.bairro}\n"
+            "${data.cidade}";
+      }else{
+        resultado = "${data.logradouro}\n"
+            "${data.bairro}\n"
+            "${data.cidade}";
+      }
     });
 
   }
@@ -39,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             resultado = 'Suas informasções aparecerão aqui';
           });
           },
-          icon: Icon(Icons.refresh),
+          icon: Icon(Icons.refresh,size: 33,),
         color: Colors.amber,)
       ],
         title: Text('CONSULTAR CEP', style: TextStyle(
@@ -56,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: InputDecoration(
                   hintText: 'Digite o CEP',
                   hintStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
+                                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.black
                     ),
@@ -67,13 +73,14 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(onPressed: (){
+              child: ElevatedButton(
+                  onPressed: (){
                 Api(Valor.text);
               }, child: Text('Consultar',
                 style: TextStyle(fontSize:20, color: Colors.amber),),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)
+                  borderRadius: BorderRadius.circular(10)
                 )
               )
               ),
@@ -92,7 +99,7 @@ class Data {
   final String logradouro;
   final String cidade;
   final String bairro;
-  final String complemento;
+  final String? complemento;
 
   Data({required this.cidade, required this.bairro, required this.complemento, required this.logradouro});
 
